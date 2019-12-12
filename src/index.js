@@ -25,6 +25,37 @@ const firebaseConfig = {
 // react-redux-firebase config
 const rrfConfig = {
   userProfile: "users"
+  // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+// initializae firebase instance
+firebase.initializeApp(firebaseConfig);
+
+// Initialize other services on firebase instance
+// firebase.firestore() // <- needed if using firestore
+// firebase.functions() // <- needed if using httpsCallable
+
+// Add firebase to reducers
+const rootReducer = combineReducers({
+  firebase: firebaseReducer
+  // firestore: firestoreReducer // <- needed if using firestore
+});
+
+// Create store with reducers and initial state
+const initialState = {};
+const store = createStore(rootReducer, initialState);
+
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch
+  // createFirestoreInstance // <- needed if using firestore
+};
+ReactDOM.render(
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <App />
+    </ReactReduxFirebaseProvider>
+  </Provider>,
+  document.getElementById("root")
+);
