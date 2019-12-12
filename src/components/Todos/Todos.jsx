@@ -8,6 +8,7 @@ import {
 } from "react-redux-firebase";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
+import TodoItem from "../TodoItem/TodoItem";
 
 const Todos = () => {
   const firebase = useFirebase();
@@ -45,7 +46,7 @@ const Todos = () => {
 
       <ul>
         {Object.keys(todos).map((key, id) => (
-          <li key={key}>{todos[key].value.text}</li>
+          <TodoItem key={id} todo={todos[key]} />
         ))}
       </ul>
     </div>
