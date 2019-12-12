@@ -5,14 +5,19 @@ import { useFirebase } from "react-redux-firebase";
 const Todos = () => {
   const firebase = useFirebase();
   function addSampleTodo() {
-    const sampleTodo = { text: "Sample", done: false };
-    return firebase
+    const sampleTodo = {
+      text: "Apbrindo a nossa agencia de programacao",
+      done: true
+    };
+    console.log("salvando...");
+    /* return firebase
       .database()
       .ref("todos")
       .set({
         text: sampleTodo.text,
         done: sampleTodo.done
-      });
+      });*/
+    return firebase.push("todos", sampleTodo);
   }
   return (
     <div>
